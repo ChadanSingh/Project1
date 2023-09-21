@@ -2,53 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tower of Hanoi</title>
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="style.css">
     <script src="challenge.js"></script>
+    <title>Tower of Hanoi</title>
 </head>
 <body>
-    <head>Tower of Hanoi</head>
-    <div class="buttons">
-         <li><button id="howtoplay">How to Play</button></li>
-         <li><button id="restart">Restart</button></li>
-         <li><button id="solve">Solve</button></li>
+    <canvas id="canvas" width="600" height="300"></canvas>
+    <h1>The Tower Of Hanoi</h1>
+    <div id="Buttons">
+        <input id="restart-button" type="button" value="Restart" />
+<input id="how-to-play-button" type="button" value="How to Play" />
+<input id="solve-button" type="button" value="Solve" />
     </div>
-    <div class="startBtnmodalwrapper">
-        <div class="startBtnmodal">
-            <div class="startBtnmodalcontent">
-               <button id="start">Start</button>
-               <button id="howtoplay">How to Play</button>
-           </div>
+    <div id="introduction">
+        <div id="introduction-message">
+            <h1>The Tower of Hanoi</h1>
+            <p>Your objective is to move your entire stack of disks from the first tower to the other two towers. There's only one
+                catch. You may not place a larger disk on top of a smaller one.</p>
+            <input id="start-new-game" type="button" value="Start game" />
         </div>
     </div>
-    <div class="gameEndmodalwrapper">
-        <div class="gameEndmodal">
-            <div class="gameEndmodalX">X</div>
-             <div class="gameEndmodalcontent">
-                 <h1>Congratulations you win!</h1>
-                 <button id="playAgain">Play Again</button>
-             </div>
-            </div>
+    <div id="victory-notification">
+        <div id="victory-message">
+            <h1>Victory!</h1>
+            <p>Congratulations! You just solved the mystery of the tower.</p>
+            <p>Number of disks: <input id="disks-count" type="text" size="2" maxlength="2" value="3" /> </p>
+            <input id="play-again" type="button" value="Play again" />
         </div>
     </div>
-    <div class="rulesModalwrapper">
-        <div class="rulesModal">
-            <div class="grulesModalX">X</div>
-             <div class="rulesmodalcontent">
-                 <h1>Instructions and Rules</h1>
-                 <h2>Instructions</h2>
-                 <li><p>All the disks are stacked on the left rod.</p></li>
-                 <li><p>The objective is to move this entier stack to the right rod.</p></li>
-                 <li><p>To make a move, choose a disk from the top of the stack left rod and move it to the right rod.</p></li>
-                 <li><p>Keep moving disks back and forth between the rods, always following the rules, until you have successfully moved the entire stack to the destination rod.</p></li>
-                 <h3>Rules</h3>
-                 <li><p>You can only move one disk at a time.</p></li>
-                 <li><p>A disk can be placed on top of a larger disk or an empty rod.</p></li>
-                 <li><p>Never place a larger disk on top of a smaller one.</p></li>
-             </div>
-            </div>
-        </div>
-    </div>
+    <div id="debug"></div>
 </body>
 </html>
+
