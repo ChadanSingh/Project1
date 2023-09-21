@@ -55,8 +55,8 @@ body {
 }
 
 input {
-    border: solid 1px #333;
-    background-color: #dedede;
+    border: solid 1px black;
+    background-color: lightgrey;
     padding: 1px;
 }
  
