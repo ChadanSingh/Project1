@@ -28,7 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("Restart-button").addEventListener("click", function () {
     location.reload();
   });
-
+  document.body.classList.add("active-sunset");
+  setTimeout(function () {
+    document.body.classList.remove("active-sunset");
+  }, 4000);
   document.getElementById("How-to-Play-button").addEventListener("click", () => {
     showInstructions();
     disableInput(); 
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   initializeGame(numberOfDisks);
 
-  moveCount = 0;kkkkkkkkk
+  moveCount = 0;
 
   document.getElementById("moves").textContent = moveCount;
 
@@ -505,3 +508,4 @@ EndPage.prototype.on_victory = function() {
       new Game(document.getElementById('disks-count-number').value);
   }, false);
 };
+
