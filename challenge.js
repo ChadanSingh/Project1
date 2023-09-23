@@ -21,16 +21,6 @@ function initializeGame() {
   document.getElementById("moves").textContent = moveCount;
 }
 
-function solveTowerOfHanoi(numberOfDisks, source, auxiliary, target) {
-    if (numberOfDisks === 1) {
-      console.log(`Move disk 1 from ${source} to ${target}`);
-      return;
-    }
-    solveTowerOfHanoi(numberOfDisks - 1, source, target, auxiliary);
-    console.log(`Move disk ${numberOfDisks} from ${source} to ${target}`);
-    solveTowerOfHanoi(numberOfDisks - 1, auxiliary, source, target);
-  }
-
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("Start-new-game").addEventListener("click", () => {
     document.getElementById("Starter-page").style.display = "none"; initializeGame(numberOfDisks);
@@ -44,15 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     disableInput(); 
   });
 
-  document.getElementById("Solve-button").addEventListener("click", () => {
-    const sourceTower = "A";
-    const auxiliaryTower = "B";
-    const targetTower = "C";
-    
-    const numberOfDisks = 3;
-  
-    solveTowerOfHanoi(numberOfDisks, sourceTower, auxiliaryTower, targetTower);
-  });
   document.getElementById("Return-button").addEventListener("click", () => {
     hideInstructions();
     enableInput();
@@ -60,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   initializeGame(numberOfDisks);
 
-  moveCount = 0;
+  moveCount = 0;kkkkkkkkk
 
   document.getElementById("moves").textContent = moveCount;
 
@@ -80,11 +61,11 @@ Canvas.prototype.load_canvas = function() {
 }
 
 Canvas.prototype.set_width = function(width) {
-  this.canvas.width = this.width = biggest(window.innerWidth, width); // this.width can be queried by external agents.
+  this.canvas.width = this.width = biggest(window.innerWidth, width);
 }
 
 Canvas.prototype.set_height = function(height) {
-  this.canvas.height = this.height = height; // this.height can be queried by external agents.
+  this.canvas.height = this.height = height;
 }
 
 Canvas.prototype.clear = function() {
@@ -96,7 +77,7 @@ Canvas.prototype.recreate = function() {
   this.canvas.parentNode.replaceChild(canvas_prime, this.canvas);
   this.load_canvas();
 }
-// Takes array containing separate integers for RGB values.
+
 function Colour(rgb) {
   this.rgb = rgb;
 }
@@ -162,8 +143,8 @@ function Disk(tower, width, colour) {
   this.transfer_to_tower(tower);
 }
 
-// Specified as class property so that TowerManager can calculate how high to make towers, based on number of disks.
-Disk.height = 15;
+
+Disk.height = 13;
 
 Disk.prototype.move_to = function(point) {
   this.position = point;
@@ -172,13 +153,12 @@ Disk.prototype.move_to = function(point) {
 
 Disk.prototype.transfer_to_tower = function(destination) {
   var top_disk = destination.get_top_disk();
-  // Do not permit disks wider than tower's existing top disk to transfer to that
-  // tower -- in such a case, move the disk back to its original tower.
+
   if(top_disk && top_disk.width < this.width) destination = this.tower;;
 
   if(this.tower) this.tower.remove_disk(this);
   this.move_to(new Point(destination.position.x + (destination.base.width - this.width)/2,
-                         destination.disks_top - this.height));
+  destination.disks_top - this.height));
   destination.add_disk(this);
   this.tower = destination;
 
@@ -197,10 +177,10 @@ Disk.prototype.draw = function() {
 }
 
 Disk.prototype.is_clicked_on = function(point) {
-  return point.x >= this.position.x              &&
-         point.x <  this.position.x + this.width &&
-         point.y >= this.position.y              &&
-         point.y <  this.position.y + this.height;
+  return point.x >= this.position.x  &&
+  point.x <  this.position.x + this.width &&
+  point.y >= this.position.y &&
+  point.y <  this.position.y + this.height;
 }
 
 Disk.prototype.is_top_disk = function() {
@@ -276,19 +256,19 @@ Game.prototype.start_new = function(disks_count) {
   debug.msg('New game');
 
   var canvas = new Canvas('canvas');
-  var tower_manager = new TowerManager(canvas, disks_count);
+  var tower_manager = new TowerUp (canvas, disks_count);
   var input_handler = new InputHandler(canvas.ctx, tower_manager);
   var game_state = new GameState(tower_manager, input_handler);
-  var victory_celebrator = new VictoryCelebrator(input_handler);
-  game_state.on_victory = function() { victory_celebrator.on_victory(); }
+  var end_page = new EndPage(input_handler);
+  game_state.on_victory = function() { end_page.on_victory(); }
 
   tower_manager.draw();
 }
 function init() {
-  debug = new Debug(); // TODO: convert to singleton to eliminate global variable.
+  debug = new Debug(); 
   new Game(3);
-  document.getElementById('start-new-game').addEventListener('click', function() {
-    document.getElementById('start-page').style.display = 'none';
+  document.getElementById('Start-new-game').addEventListener('click', function() {
+    document.getElementById('Start-page').style.display = 'none';
   }, false);
 }
 window.addEventListener('load', init, false);
@@ -384,7 +364,7 @@ Point.prototype.distance_to = function(other) {
 Point.prototype.toString = function() {
   return '(' + this.x + ', ' + this.y + ')';
 }
-function TowerManager(canvas, disks_count) {
+function TowerUp(canvas, disks_count) {
   this.canvas = canvas;
   this.disks_count = parseInt(disks_count, 10);
   this.towers_count = 3;
@@ -392,26 +372,25 @@ function TowerManager(canvas, disks_count) {
   this.add_initial_disks();
 }
 
-TowerManager.prototype.add_initial_disks = function() {
+TowerUp.prototype.add_initial_disks = function() {
   var disk_widths = this.calculate_disk_widths();
   while(width = disk_widths.pop()) new Disk(this.towers[0], width, Colour.random().toString());
 }
 
-TowerManager.prototype.draw = function() {
+TowerUp.prototype.draw = function() {
   this.canvas.clear();
   for(i in this.towers) {
     this.towers[i].draw();
   }
 }
 
-TowerManager.prototype.create_towers = function() {
+TowerUp.prototype.create_towers = function() {
   this.towers = [];
   var base_width = this.calculate_disk_widths().pop() + 30;
   var stem_height = this.disks_count*Disk.height + 40;
   var base_horizontal_separation = biggest(16, base_width/10);
   var horizontal_padding = 42;
   var vertical_padding = 80;
-
   var towers_width = base_width*this.towers_count + base_horizontal_separation*(this.towers_count - 1);
   this.canvas.set_width(towers_width + 2*horizontal_padding);
   var x = (this.canvas.width - towers_width)/2;
@@ -424,41 +403,41 @@ TowerManager.prototype.create_towers = function() {
   this.canvas.set_height(this.towers[0].height + 2*vertical_padding);
 }
 
-TowerManager.prototype.calculate_disk_widths = function() {
+TowerUp.prototype.calculate_disk_widths = function() {
   var disk_widths = [];
-  var width = 40;
+  var width = 65;
   for(var i = 0; i < this.disks_count; i++) {
     disk_widths.push(width += 20);
   }
   return disk_widths;
 }
 
-TowerManager.prototype.get_clicked_disk = function(point) {
+TowerUp.prototype.get_clicked_disk = function(point) {
   var disks = this.get_all_disks();
   for(i in disks) {
     if(disks[i].is_clicked_on(point)) return disks[i];
   }
 }
 
-TowerManager.prototype.get_all_disks = function() {
+TowerUp.prototype.get_all_disks = function() {
   var disks = [];
   for(i in this.towers) disks = disks.concat(this.towers[i].disks);
   return disks;
 }
 
-TowerManager.prototype.find_closest_tower = function(point) {
+TowerUp.prototype.find_closest_tower = function(point) {
   var distances = [];
   for(i in this.towers) {
     distances.push({'tower':    this.towers[i],
-                    'distance': this.towers[i].top.distance_to(point)});
+  'distance': this.towers[i].top.distance_to(point)});
   }
   distances.sort(function(a, b) { return a.distance - b.distance; });
   return distances[0]['tower'];
 }
 
 
-TowerManager.prototype.toString = function() {
-  return 'TowerManager( ' + this.towers + ' )';
+TowerUp.prototype.toString = function() {
+  return 'TowerUp( ' + this.towers + ' )';
 }
 function Tower(position, base_width, stem_height, ctx) {
   this.position = position;
@@ -466,11 +445,10 @@ function Tower(position, base_width, stem_height, ctx) {
   this.disks = [];
 
   this.base = {'width': base_width, 'height': 20};
-  this.stem = {'width': 20, 'height': stem_height};
+  this.stem = {'width': 30, 'height': stem_height};
   this.height = this.base.height + this.stem.height;
   this.base.position = new Point(this.position.x, this.position.y + this.stem.height);
   this.stem.position = new Point(this.position.x + (this.base.width/2 - this.stem.width/2), this.position.y);
-
   this.top = new Point(this.stem.position.x + this.stem.width/2, this.stem.position.y);
   this.disks_top = this.base.position.y;
 }
@@ -513,17 +491,17 @@ Tower.prototype.draw_disks = function() {
 Tower.prototype.get_top_disk = function() {
   return this.disks[this.disks.length - 1];
 }
-function VictoryCelebrator(input_handler) {
+function EndPage(input_handler) {
   this.input_handler = input_handler;
 }
 
-VictoryCelebrator.prototype.on_victory = function() {
+EndPage.prototype.on_victory = function() {
   this.input_handler.disable_input();
 
-  var victory_notification = document.getElementById('End-page');
-  victory_notification.style.display = 'block';
+  var end_page = document.getElementById('End-page');
+  end_page.style.display = 'block';
   document.getElementById('Play-again-button').addEventListener('click', function() {
-      victory_notification.style.display = 'none';
+      end_page.style.display = 'none';
       new Game(document.getElementById('disks-count-number').value);
   }, false);
 };
