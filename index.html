@@ -1,37 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="style.css">
-    <script src="challenge.js"></script>
-    <title>Tower of Hanoi</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+ <link rel="stylesheet" href="style.css">
+ <script src="challenge.js"></script>
+ <title>Tower of Hanoi</title>
 </head>
 <body>
-    <canvas id="canvas" width="600" height="300"></canvas>
-    <h1>The Tower Of Hanoi</h1>
-    <div id="Buttons">
-        <input id="restart-button" type="button" value="Restart" />
-<input id="how-to-play-button" type="button" value="How to Play" />
-<input id="solve-button" type="button" value="Solve" />
+ <div id="Tower-of-Hanoi">
+ <div id="Title-Of-Game">
+     <h1>The Tower of Hanoi</h1>
+ </div>
+ <div id="Buttons">
+    <p><input id="Restart-button" type="button" value="Restart" /> <input id="How-to-Play-button" type="button" value="How to Play" /> <input id="Solve-button" type="button" value="Solve" /></p>
+ </div>
+ <div id="Move-counter">
+    <p>Moves: <span id="moves">0</span></p>
+ </div>
+ <div id="instructions">
+    <div id="instructions-message">
+      <h1>How to Play</h1>
+      <h2>Instructions</h2>
+      <p>In the Tower of Hanoi puzzle, your objective is to move a stack of disks from one rod to another while following two rules: you can only move one disk at a time, and you cannot place a larger disk on top of a smaller one. Your goal is to accomplish this task using the fewest possible moves.</p>
+      <h2>Rules</h2>
+      <ul style="list-style-type:square">
+         <li>Different-sized disks are used, with the largest disk at the bottom and the smallest at the top.</li>
+         <li>The goal is to move the entire stack of disks from one starting rode to the finish rod.</li>
+         <li>Only one disk can be moved at a time; moving multiple disks together is not allowed.</li>
+         <li>The objective is to solve the puzzle using the fewest possible moves. The minimum number of moves needed to solve the Tower of Hanoi.</li>
+      </ul>
+      <div id="Return-button">
+       <button id="Return-button">Return</button>
+      </div>
     </div>
-    <div id="introduction">
-        <div id="introduction-message">
-            <h1>The Tower of Hanoi</h1>
-            <p>Your objective is to move your entire stack of disks from the first tower to the other two towers. There's only one
-                catch. You may not place a larger disk on top of a smaller one.</p>
-            <input id="start-new-game" type="button" value="Start game" />
+ </div>
+<div id="Starter-page">
+    <div id="Starter-page-message">
+        <h1>Tower of Hanoi</h1>
+        <p>The objectve is to move your stack of disk from the first tower to the last tower without trying to add larger disk on top of the smaller disk.</p>
+        <div id="Start-button">
+            <input id="Start-new-game" type="button" value="Start"/>
         </div>
     </div>
-    <div id="victory-notification">
-        <div id="victory-message">
-            <h1>Victory!</h1>
-            <p>Congratulations! You just solved the mystery of the tower.</p>
-            <p>Number of disks: <input id="disks-count" type="text" size="2" maxlength="2" value="3" /> </p>
-            <input id="play-again" type="button" value="Play again" />
-        </div>
+</div>
+<div id="End-page">
+    <div id="End-page-message">
+      <h1>Congratulations you win!!!!</h1>
+      <p>Now challenge yourself and change the number of disk below.</p>
+      <div id="Number-of-Disks">
+         <p>Number of Disks: <input id="disks-count-number" type="text" size="2" maxlength="2" value="3" /></p>
+      </div>
+      <div id="Play-again">
+         <input id="Play-again-button" type="button" value="Play Again">
+      </div>
     </div>
-    <div id="debug"></div>
+</div>
+<canvas id="canvas" width="600" height="400"></canvas>
+<script src="challenge.js"></script>
+<div id="debug"></div>
+</div>
 </body>
 </html>
 
