@@ -21,6 +21,16 @@ function initializeGame() {
   document.getElementById("moves").textContent = moveCount;
 }
 
+function solveTowerOfHanoi(numberOfDisks, source, auxiliary, target) {
+    if (numberOfDisks === 1) {
+      console.log(`Move disk 1 from ${source} to ${target}`);
+      return;
+    }
+    solveTowerOfHanoi(numberOfDisks - 1, source, target, auxiliary);
+    console.log(`Move disk ${numberOfDisks} from ${source} to ${target}`);
+    solveTowerOfHanoi(numberOfDisks - 1, auxiliary, source, target);
+  }
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("Start-new-game").addEventListener("click", () => {
     document.getElementById("Starter-page").style.display = "none"; initializeGame(numberOfDisks);
@@ -34,8 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
     disableInput(); 
   });
 
-  document.getElementById("Solve-button").addEventListener("click", solveGame);
-
+  document.getElementById("Solve-button").addEventListener("click", () => {
+    const sourceTower = "A";
+    const auxiliaryTower = "B";
+    const targetTower = "C";
+    
+    const numberOfDisks = 3;
+  
+    solveTowerOfHanoi(numberOfDisks, sourceTower, auxiliaryTower, targetTower);
+  });
   document.getElementById("Return-button").addEventListener("click", () => {
     hideInstructions();
     enableInput();
@@ -88,9 +105,7 @@ Colour.prototype.toString = function() {
   return 'rgb(' + this.rgb.join() + ')';
 }
 Colour.random = function() {
-  return Colour.convert_hsv_to_rgb([random_int(0, 359),
-                                    random_int(40, 80)/80,
-                                    random_int(40, 80)/80]);
+  return Colour.convert_hsv_to_rgb([random_int(0, 359),  random_int(40, 80)/80, random_int(40, 80)/80]);
 }
 Colour.random_alternative = function() {
   var rgb = [random_int(0, 127), random_int(64, 192), random_int(128, 255)];
